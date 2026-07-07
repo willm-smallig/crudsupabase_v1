@@ -21,7 +21,7 @@ export const addProducts = async (req, res) => {
     "precio": Number(precio)    
     });
     
-    res.redirect("/api");
+    res.redirect("/");
 };
 
 export const newFormulario = async (req, res) => {
