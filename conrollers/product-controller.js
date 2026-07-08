@@ -26,33 +26,19 @@ export const addProducts = async (req, res) => {
 
 export const updateProducts = async (req, res) => {
     console.log("Actualizar producto...");
-    const { nombre, unidades, precio } = req.body;
+    const { id,nombre, unidades, precio } = req.body;
     if (!nombre || !unidades || !precio) {
         return res.send("Faltan campos obligatorios");
     }
-    const insertar = await supabase.from("productos").insert({
+    const insertar = await supabase.from("productos").update({
     "nombre": nombre,
     "unidades": Number(unidades),
     "precio": Number(precio)    
-    });
+    }).eq("id",id);
     
     res.redirect("/");
 };
 
-export const deleteProducts = async (req, res) => {
-    console.log("Eliminar producto...");
-    const { nombre, unidades, precio } = req.body;
-    if (!nombre || !unidades || !precio) {
-        return res.send("Faltan campos obligatorios");
-    }
-    const insertar = await supabase.from("productos").insert({
-    "nombre": nombre,
-    "unidades": Number(unidades),
-    "precio": Number(precio)    
-    });
-    
-    res.redirect("/");
-};
 
 
 
@@ -61,9 +47,15 @@ export const nuevoFormulario = async (req, res) => {
 };
 
 export const actualizarFormulario=async (req, res)=>{
-    res.render("nuevo", {title: "hey", message: "hello there"})
+    res.render("actualizar", {title: "hey", message: "hello there"})
 };
 
 export const eliminarFormulario=async (req, res)=>{
-    res.render("nuevo", {title: "hey", message: "hello there"})
+    res.render("eliminar", {title: "hey", message: "hello there"})
 };
+
+export const deleteProducts=async (req, res)=>{
+    res.render('eliminar')
+    const  {id}=req.body;
+    const eliminar = await supabase.from("productos").delete().eq("id",id);
+} 
